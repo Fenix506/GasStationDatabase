@@ -52,6 +52,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Caliburn.Micro.3.2.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
@@ -79,6 +81,16 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Models\Client.cs" />
+    <Compile Include="Models\GasStationModel.cs" />
+    <Compile Include="Models\Income_Fuel.cs" />
+    <Compile Include="Models\Operation_History.cs" />
+    <Compile Include="Models\Personal.cs" />
+    <Compile Include="Models\Sell_Fuel.cs" />
+    <Compile Include="Models\Total_Money.cs" />
+    <Compile Include="Models\Type_Fuel.cs" />
+    <Compile Include="Models\Type_Operation.cs" />
+    <Compile Include="Models\Work_Position.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
@@ -111,9 +123,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Page Include="Views\MainView.xaml">
       <SubType>Designer</SubType>
