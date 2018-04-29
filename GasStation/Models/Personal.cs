@@ -27,6 +27,10 @@ namespace GasStation.Models
         [StringLength(20)]
         public string Surname { get; set; }
 
+        [Required]
+        [StringLength(20)]
+        public string Password{ get; set; }
+
         [StringLength(20)]
         public string Middle_Name { get; set; }
 
