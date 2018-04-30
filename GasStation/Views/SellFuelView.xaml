@@ -5,8 +5,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:GasStation.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignHeight="500"
-    d:DesignWidth="600"
+    d:DesignHeight="600"
+    d:DesignWidth="800"
     mc:Ignorable="d">
     <UserControl.Resources>
         <Style BasedOn="{StaticResource {x:Type ToggleButton}}" TargetType="RadioButton">
@@ -37,18 +37,25 @@
             <ColumnDefinition Width="20" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
+
             <RowDefinition Height="20" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
-
+        <StackPanel
+            Grid.Row="1"
+            Grid.Column="1"
+            Grid.ColumnSpan="7">
+            <TextBlock x:Name="PersonalInfo" />
+        </StackPanel>
         <StackPanel
             Grid.Row="2"
             Grid.Column="1"
@@ -56,9 +63,13 @@
             Orientation="Horizontal">
             <Label>Дисконтна програма</Label>
             <TextBox x:Name="ClientNum" Width="120" />
-            <TextBlock x:Name="PersonalDiscount" />
-            <TextBlock x:Name="SoldFuel" />
-            <TextBlock x:Name="Bonuss" />
+            <Button x:Name="SearchClient" FontSize="12">Пошук</Button>
+        </StackPanel>
+        <StackPanel
+            Grid.Row="3"
+            Grid.Column="1"
+            Grid.ColumnSpan="5">
+            <TextBlock x:Name="ClientInfo" />
         </StackPanel>
         <StackPanel
             Grid.Row="4"
@@ -70,10 +81,11 @@
             Grid.Row="5"
             Grid.RowSpan="6"
             Grid.Column="1">
-            <RadioButton GroupName="Column">
+
+            <RadioButton x:Name="Column1" GroupName="Column">
                 1
             </RadioButton>
-            <RadioButton GroupName="Column">
+            <RadioButton x:Name="Column3" GroupName="Column">
                 3
             </RadioButton>
 
@@ -82,10 +94,10 @@
             Grid.Row="5"
             Grid.RowSpan="6"
             Grid.Column="2">
-            <RadioButton GroupName="Column">
+            <RadioButton x:Name="Column2" GroupName="Column">
                 2
             </RadioButton>
-            <RadioButton GroupName="Column">
+            <RadioButton x:Name="Column4" GroupName="Column">
                 4
             </RadioButton>
         </StackPanel>
@@ -93,13 +105,13 @@
             Grid.Row="5"
             Grid.Column="4"
             Orientation="Horizontal">
-            <RadioButton GroupName="Type">
+            <RadioButton x:Name="Type1" GroupName="Type">
                 A-95
             </RadioButton>
-            <RadioButton GroupName="Type">
+            <RadioButton x:Name="Type2" GroupName="Type">
                 A-92
             </RadioButton>
-            <RadioButton GroupName="Type">
+            <RadioButton x:Name="Type3" GroupName="Type">
                 DP
             </RadioButton>
         </StackPanel>
@@ -107,29 +119,27 @@
             Grid.Row="6"
             Grid.Column="4"
             Orientation="Horizontal">
-            <RadioButton GroupName="Type">
+            <RadioButton x:Name="Type4" GroupName="Type">
                 A-95+
             </RadioButton>
-            <RadioButton GroupName="Type">
+            <RadioButton x:Name="Type5" GroupName="Type">
                 DP+
             </RadioButton>
-            <RadioButton GroupName="Type">
+            <RadioButton x:Name="Type6" GroupName="Type">
                 LPG
             </RadioButton>
         </StackPanel>
         <StackPanel
-            x:Name="Count"
             Grid.Row="5"
             Grid.Column="6"
             Orientation="Horizontal">
-            <TextBox Width="120" />
+            <TextBox x:Name="Count" Width="120" />
         </StackPanel>
         <StackPanel
-            x:Name="Money"
             Grid.Row="6"
             Grid.Column="6"
             Orientation="Horizontal">
-            <TextBox Width="120" />
+            <TextBox x:Name="Money" Width="120" />
         </StackPanel>
         <Button
             x:Name="Sell"
@@ -138,5 +148,23 @@
             Grid.Column="7">
             Розрахувати
         </Button>
+        <StackPanel
+            Grid.Row="7"
+            Grid.Column="1"
+            Grid.ColumnSpan="2">
+            <TextBlock>Інформація</TextBlock>
+        </StackPanel>
+        <StackPanel
+            Grid.Row="8"
+            Grid.Column="1"
+            Grid.ColumnSpan="5">
+            <DataGrid
+                Margin="5"
+                AutoGenerateColumns="True"
+                CanUserAddRows="False"
+                ColumnWidth="Auto"
+                IsReadOnly="True"
+                ItemsSource="{Binding Path=Information.DefaultView}" />
+        </StackPanel>
     </Grid>
 </UserControl>

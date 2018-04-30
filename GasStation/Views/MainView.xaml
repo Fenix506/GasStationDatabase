@@ -9,7 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="GasStationControll"
     Width="800"
-    Height="500"
+    Height="600"
     mc:Ignorable="d">
     <Grid Background="red">
         <Grid.ColumnDefinitions>

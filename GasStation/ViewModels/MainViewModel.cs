@@ -16,10 +16,19 @@ namespace GasStation.ViewModels
             DisplayName = "";
 
             var Login = new LoginViewModel();
-            var SellFuel = new SellFuelViewModel();
+           
+
+            Login.SignIn += (sender, args) =>
+            {
+                Items.Remove(Login);
+                var personal = (args as LoginViewModel.PersonalEventArgs)?.Personal;
+                var SellFuel = new SellFuelViewModel(personal);
+                Items.Add(SellFuel);
+                Select(SellFuel);
+            };
 
             Items.Add(Login);
-            Items.Add(SellFuel);
+           
          
 
             Select(Login);

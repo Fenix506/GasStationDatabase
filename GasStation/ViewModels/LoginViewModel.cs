@@ -10,9 +10,10 @@ namespace GasStation.ViewModels
 {
     class LoginViewModel: Screen
     {
-        private Personal _personal;
+       
         private string _password;
         private string _personalNum;
+        private string _connecting;
 
         public LoginViewModel()
         {
@@ -29,8 +30,7 @@ namespace GasStation.ViewModels
 
         public void LogIn()
         {
-            int id;
-            if (Int32.TryParse(PersonalNum, out id))
+            if (Int32.TryParse(PersonalNum, out var id))
             {
                 using (GasStationModel db = new GasStationModel())
                 {
@@ -39,8 +39,13 @@ namespace GasStation.ViewModels
                     if (db.Personal.Count(x => x.Personal_Num == id && x.Password == Password) == 1)
                     {
                         Connecting = "Вхід";
-                        _personal = db.Personal.Single(x => x.Personal_Num == id && x.Password == Password);
-                      
+                        var personal = db.Personal.Single(x => x.Personal_Num == id && x.Password == Password);
+
+                        SignIn?.Invoke(this, new PersonalEventArgs()
+                        {
+                            Personal = personal
+                            
+                        });
                     }
                     else
                     {
@@ -52,7 +57,7 @@ namespace GasStation.ViewModels
            
            
         }
-        private string _connecting;
+   
 
         public string Connecting
         {
@@ -87,8 +92,14 @@ namespace GasStation.ViewModels
             }
         }
 
-       
 
+        public delegate void EventHendler(object sender, EventArgs args);
 
+        public event EventHendler SignIn;
+
+        public class PersonalEventArgs : EventArgs
+        {
+            public Personal Personal { get; set; }
+        }
     }
 }

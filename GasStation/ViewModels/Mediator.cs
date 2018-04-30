@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GasStation.ViewModels
 {
-    class Mediator
+   interface Mediator
     {
     }
 }
