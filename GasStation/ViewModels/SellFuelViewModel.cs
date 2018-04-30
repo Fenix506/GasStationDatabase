@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlTypes;
+using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Caliburn.Micro;
 using GasStation.Models;
 
@@ -12,16 +10,16 @@ namespace GasStation.ViewModels
 {
     sealed class SellFuelViewModel : Screen
     {
-
+        private int _relevantCashbox = 1;
         private Personal _personal;
-        private Client _client = null;
+        private Client _client;
         private List<Type_Fuel> _infoFuel;
         private string _clientInfo;
         private string _clientNum;
         private bool[] _column = new bool[4];
         private bool[] _type = new bool[6];
-        private string _count;
-        private string _money;
+        private string _count = string.Empty;
+        private string _money = string.Empty;
         private DataTable _information;
 
 
@@ -34,9 +32,6 @@ namespace GasStation.ViewModels
         }
 
         #region Methods
-
-      
-
         private void CreateInformation()
         {
             using (GasStationModel db = new GasStationModel())
@@ -48,7 +43,7 @@ namespace GasStation.ViewModels
             infoTable.Columns.Add("Назва", typeof(string));
             infoTable.Columns.Add("Ціна грн\\л", typeof(float));
             infoTable.Columns.Add("Запаси", typeof(float));
-            if(_client != null)infoTable.Columns.Add("Ціна клієнта", typeof(float));
+            if (_client != null) infoTable.Columns.Add("Ціна клієнту", typeof(float));
 
 
             for (int i = 0; i < _infoFuel.Count; i++)
@@ -57,22 +52,70 @@ namespace GasStation.ViewModels
                 row[0] = _infoFuel[i].Name_Fuel;
                 row[1] = _infoFuel[i].Price;
                 row[2] = _infoFuel[i].Count_Fuel;
-                if (_client != null) row[3] = _infoFuel[i].Price-_client.Personal_Discount;
+                if (_client != null) row[3] = _infoFuel[i].Price - _client.Personal_Discount;
                 infoTable.Rows.Add(row);
             }
             Information = infoTable;
         }
 
-        private bool IsDigitF(string str)
+        private bool IsDigitF(string str) => float.TryParse(str, out var tmp) && tmp > 0;
+
+        private bool IsDigitI(string str) => int.TryParse(str, out var tmp) && tmp > 0;
+
+        private float GetRelevantPrice()
         {
-            return float.TryParse(str, out var tmp);
+            for (int i = 0; i < _type.Length; i++)
+            {
+                if (_type[i])
+                    return _client != null
+                      ? (float)(_infoFuel[i].Price - _client.Personal_Discount)
+                      : (float)_infoFuel[i].Price;
+            }
+            return 0;
         }
 
-        private bool IsDigitI(string str)
+        private int GetNumberColumn()
         {
-            return Int32.TryParse(str, out var tmp);
+            for (int i = 0; i < _column.Length; i++)
+            {
+                if (_column[i]) return i + 1;
+            }
+            return 0;
         }
 
+        private int GetTypeFuel()
+        {
+            for (int i = 0; i < _type.Length; i++)
+            {
+                if (_type[i]) return i + 1;
+            }
+            return 0;
+        }
+
+        private void Recalculate()
+        {
+            Count = Count;
+            Money = Money;
+        }
+
+        private void ResetAll()
+        {
+            _client = null;
+            ClientNum = string.Empty;
+            ClientInfo = string.Empty;
+            Column1 = false;
+            Column2 = false;
+            Column3 = false;
+            Column4 = false;
+            Type1 = false;
+            Type2 = false;
+            Type3 = false;
+            Type4 = false;
+            Type5 = false;
+            Type6 = false;
+            Count = string.Empty;
+            Money = string.Empty;
+        }
         #endregion
 
         #region Property
@@ -158,6 +201,7 @@ namespace GasStation.ViewModels
             {
                 if (value.Equals(_type[0])) return;
                 _type[0] = value;
+                Recalculate();
                 NotifyOfPropertyChange(() => Type1);
                 NotifyOfPropertyChange(() => CanSell);
             }
@@ -170,6 +214,7 @@ namespace GasStation.ViewModels
             {
                 if (value.Equals(_type[1])) return;
                 _type[1] = value;
+                Recalculate();
                 NotifyOfPropertyChange(() => Type2);
                 NotifyOfPropertyChange(() => CanSell);
             }
@@ -182,6 +227,7 @@ namespace GasStation.ViewModels
             {
                 if (value.Equals(_type[2])) return;
                 _type[2] = value;
+                Recalculate();
                 NotifyOfPropertyChange(() => Type3);
                 NotifyOfPropertyChange(() => CanSell);
             }
@@ -194,6 +240,7 @@ namespace GasStation.ViewModels
             {
                 if (value.Equals(_type[3])) return;
                 _type[3] = value;
+                Recalculate();
                 NotifyOfPropertyChange(() => Type4);
                 NotifyOfPropertyChange(() => CanSell);
             }
@@ -206,6 +253,7 @@ namespace GasStation.ViewModels
             {
                 if (value.Equals(_type[4])) return;
                 _type[4] = value;
+                Recalculate();
                 NotifyOfPropertyChange(() => Type5);
                 NotifyOfPropertyChange(() => CanSell);
             }
@@ -218,6 +266,7 @@ namespace GasStation.ViewModels
             {
                 if (value.Equals(_type[5])) return;
                 _type[5] = value;
+                Recalculate();
                 NotifyOfPropertyChange(() => Type6);
                 NotifyOfPropertyChange(() => CanSell);
             }
@@ -228,9 +277,25 @@ namespace GasStation.ViewModels
             get => _count;
             set
             {
-                _count = value;
+
+
+                if (IsDigitF(value))
+                {
+                    if (GetTypeFuel() != 0)
+                        _count = float.Parse(value) > _infoFuel[GetTypeFuel() - 1].Count_Fuel
+                            ? _infoFuel[GetTypeFuel() - 1].Count_Fuel.ToString()
+                            : value;
+                    else _count = value;
+                    _money = Math.Round((float.Parse(_count) * GetRelevantPrice()), 2).ToString();
+                }
+                else
+                {
+                    _count = value;
+                }
+
                 NotifyOfPropertyChange(() => Count);
                 NotifyOfPropertyChange(() => CanSell);
+                NotifyOfPropertyChange(() => Money);
             }
         }
 
@@ -239,9 +304,24 @@ namespace GasStation.ViewModels
             get => _money;
             set
             {
-                _money = value;
+
+                if (IsDigitF(value))
+                {
+                    if (GetTypeFuel() != 0)
+                    {
+                        _money = float.Parse(value) / GetRelevantPrice() > _infoFuel[GetTypeFuel() - 1].Count_Fuel
+                            ? Math.Round(_infoFuel[GetTypeFuel() - 1].Count_Fuel * GetRelevantPrice(), 2).ToString()
+                            : value;
+                        _count = Math.Round((double.IsPositiveInfinity((Convert.ToDouble(_money) / GetRelevantPrice()))
+                            ? 0
+                            : (Convert.ToDouble(_money) / GetRelevantPrice())), 2).ToString();
+                    }
+                    else _money = value;
+                }
+                else _money = value;
                 NotifyOfPropertyChange(() => Money);
                 NotifyOfPropertyChange(() => CanSell);
+                NotifyOfPropertyChange(() => Count);
             }
         }
 
@@ -253,31 +333,24 @@ namespace GasStation.ViewModels
                 _information = value;
                 NotifyOfPropertyChange(() => Information);
             }
-            //get
-            //{
-            //    string inform = "";
-            //    foreach (var info in _infoFuel)
-            //    {
-            //        inform += String.Format("{0}: {1}грн. Запаси:{2}\n",info.Name_Fuel,info.Price,info.Count_Fuel);
-            //    }
-            //    return inform;
-            //}
         }
+
+
+
 
         #endregion
 
         #region Buttons
 
-        public bool CanSearchClient
-        {
-            get => !String.IsNullOrWhiteSpace(ClientNum);
-        }
+        public bool CanSearchClient => !string.IsNullOrWhiteSpace(ClientNum) && IsDigitI(ClientNum);
 
         public void SearchClient()
         {
-            if (Int32.TryParse(ClientNum, out var identificator))
+
+            if (int.TryParse(ClientNum, out var identificator))
             {
-                using (GasStationModel db = new GasStationModel())
+                
+                using (var db = new GasStationModel())
                 {
                     _client = db.Client.Find(identificator);
                 }
@@ -285,8 +358,10 @@ namespace GasStation.ViewModels
 
             if (_client != null)
             {
-                ClientInfo = String.Format("{0} {1} {2} \nПерсональна знижка: {3} \nКуплено палива: {4} \nКількість бонусів {5}", _client.Surname, _client.Name, _client.Middle_Name, _client.Personal_Discount, _client.Liters_Sold, _client.Bonus);
+                ClientInfo =
+                    $"{_client.Surname} {_client.Name} {_client.Middle_Name} \nПерсональна знижка: {_client.Personal_Discount} \nКуплено палива: {_client.Liters_Sold} \nКількість бонусів {_client.Bonus}";
                 CreateInformation();
+                Recalculate();
             }
         }
 
@@ -304,14 +379,34 @@ namespace GasStation.ViewModels
                     if (type) check2 = true;
                 }
 
-                return check1 && check2 && !String.IsNullOrWhiteSpace(Count) && !String.IsNullOrWhiteSpace(Money) && IsDigitF(Count) && IsDigitF(Money);
+                return check1 && check2 && !string.IsNullOrWhiteSpace(Count) && !string.IsNullOrWhiteSpace(Money) && IsDigitF(Count) && IsDigitF(Money) && float.Parse(Count) >= 1;
             }
 
         }
 
         public void Sell()
         {
-            
+            var clientNum = _client != null ? new SqlParameter("@Client_Num", _client.Client_Num) : null;
+
+            var personalNum = new SqlParameter("@Personal_Num", _personal.Personal_Num);
+            var numberColumn = new SqlParameter("@Number_Column", GetNumberColumn());
+            if (!float.TryParse(Count, out var count)) return;
+            var countSell = new SqlParameter("@Count_Sell", count);
+            var fuelId = new SqlParameter("@Fuel_Id", GetTypeFuel());
+            var cashbox = new SqlParameter("@Cashbox", _relevantCashbox);
+
+            using (var db = new GasStationModel())
+            {
+                if (clientNum != null)
+                    db.Database.ExecuteSqlCommand("Sell_Operation_Procedure @Personal_Num, @Number_Column, @Count_Sell, @Fuel_Id, @Cashbox, @Client_Num",
+                        personalNum, numberColumn, countSell, fuelId, cashbox, clientNum);
+                else
+                    db.Database.ExecuteSqlCommand("Sell_Operation_Procedure @Personal_Num, @Number_Column, @Count_Sell, @Fuel_Id, @Cashbox",
+                        personalNum, numberColumn, countSell, fuelId, cashbox);
+            }
+
+            ResetAll();
+            CreateInformation();
         }
         #endregion
 
