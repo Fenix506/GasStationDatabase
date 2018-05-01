@@ -1,0 +1,85 @@
+﻿<UserControl
+    x:Class="GasStation.Views.IncomeFuelView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:GasStation.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="600"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style BasedOn="{StaticResource {x:Type ToggleButton}}" TargetType="RadioButton">
+            <Setter Property="Width" Value="40" />
+            <Setter Property="Height" Value="40" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+    </UserControl.Resources>
+    <Grid Background="Wheat">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+
+            <ColumnDefinition Width="20" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+
+        <StackPanel
+            Grid.Row="2"
+            Grid.Column="2"
+            Orientation="Horizontal">
+            <RadioButton x:Name="Type1" GroupName="Type">
+                A-95
+            </RadioButton>
+            <RadioButton x:Name="Type2" GroupName="Type">
+                A-92
+            </RadioButton>
+            <RadioButton x:Name="Type3" GroupName="Type">
+                DP
+            </RadioButton>
+        </StackPanel>
+        <StackPanel
+            Grid.Row="3"
+            Grid.Column="2"
+            Orientation="Horizontal">
+            <RadioButton x:Name="Type4" GroupName="Type">
+                A-95+
+            </RadioButton>
+            <RadioButton x:Name="Type5" GroupName="Type">
+                DP+
+            </RadioButton>
+            <RadioButton x:Name="Type6" GroupName="Type">
+                LPG
+            </RadioButton>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="4">
+            <TextBox
+                x:Name="Count"
+                Width="120"
+                Height="40"
+                Margin="5" />
+        </StackPanel>
+        <StackPanel Grid.Row="3" Grid.Column="4">
+            <Button
+                x:Name="Income"
+                Width="120"
+                Height="40"
+                Margin="5">
+                Отримано
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

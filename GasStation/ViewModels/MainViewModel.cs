@@ -1,40 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using Caliburn.Micro;
-using GasStation.Models;
+
 
 namespace GasStation.ViewModels
 {
-    public class MainViewModel : Conductor<object> {
+    public sealed class MainViewModel : Conductor<object> {
 
         public MainViewModel()
         {
             DisplayName = "";
 
-            var Login = new LoginViewModel();
-           
+            var login = new LoginViewModel();
+          
 
-            Login.SignIn += (sender, args) =>
+            login.SignIn += (sender, args) =>
             {
-                Items.Remove(Login);
+                Items.Remove(login);
                 var personal = (args as LoginViewModel.PersonalEventArgs)?.Personal;
-                var SellFuel = new SellFuelViewModel(personal);
-                Items.Add(SellFuel);
-                Select(SellFuel);
+                var sellFuel = new SellFuelViewModel(personal);
+                var registration = new RegistrationClientViewModel();
+                var income = new IncomeFuelViewModel();
+                Items.Add(sellFuel);
+                Items.Add(income);
+                Items.Add(registration);
+                Select(sellFuel);
             };
-
-            Items.Add(Login);
+       
+            Items.Add(login);
            
          
 
-            Select(Login);
+            Select(login);
         }
 
-        public BindableCollection<IScreen> Items { get; protected set; } = new BindableCollection<IScreen>();
+        public BindableCollection<IScreen> Items { get; } = new BindableCollection<IScreen>();
 
         public void Select(object datacontext)
         {
