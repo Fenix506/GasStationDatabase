@@ -96,8 +96,10 @@
     <Compile Include="ViewModels\IncomeFuelViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\AddWorkerViewModel.cs" />
     <Compile Include="ViewModels\RegistrationClientViewModel.cs" />
     <Compile Include="ViewModels\SellFuelViewModel.cs" />
+    <Compile Include="ViewModels\StatisticViewModel.cs" />
     <Compile Include="Views\IncomeFuelView.xaml.cs">
       <DependentUpon>IncomeFuelView.xaml</DependentUpon>
     </Compile>
@@ -107,11 +109,17 @@
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\AddWorkerView.xaml.cs">
+      <DependentUpon>AddWorkerView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\RegistrationClientView.xaml.cs">
       <DependentUpon>RegistrationClientView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SellFuelView.xaml.cs">
       <DependentUpon>SellFuelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatisticView.xaml.cs">
+      <DependentUpon>StatisticView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -155,11 +163,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\AddWorkerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\RegistrationClientView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SellFuelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatisticView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

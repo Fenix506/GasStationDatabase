@@ -12,7 +12,7 @@ namespace GasStation.ViewModels
 
             var login = new LoginViewModel();
           
-
+          
             login.SignIn += (sender, args) =>
             {
                 Items.Remove(login);
@@ -20,9 +20,11 @@ namespace GasStation.ViewModels
                 var sellFuel = new SellFuelViewModel(personal);
                 var registration = new RegistrationClientViewModel();
                 var income = new IncomeFuelViewModel();
+                var addworker = new AddWorkerViewModel();
                 Items.Add(sellFuel);
                 Items.Add(income);
                 Items.Add(registration);
+                Items.Add(addworker);
                 Select(sellFuel);
             };
        

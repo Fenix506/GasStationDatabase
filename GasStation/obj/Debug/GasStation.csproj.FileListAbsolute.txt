@@ -34,3 +34,5 @@ C:\Users\super\Desktop\НУ-ЛП_3К2С\Course\GasStation\GasStation\obj\Debug\V
 C:\Users\super\Desktop\НУ-ЛП_3К2С\Course\GasStation\GasStation\obj\Debug\Views\RegistrationClientView.baml
 C:\Users\super\Desktop\НУ-ЛП_3К2С\Course\GasStation\GasStation\obj\Debug\Views\IncomeFuelView.g.cs
 C:\Users\super\Desktop\НУ-ЛП_3К2С\Course\GasStation\GasStation\obj\Debug\Views\IncomeFuelView.baml
+C:\Users\super\Desktop\НУ-ЛП_3К2С\Course\GasStation\GasStation\obj\Debug\Views\AddWorkerView.g.cs
+C:\Users\super\Desktop\НУ-ЛП_3К2С\Course\GasStation\GasStation\obj\Debug\Views\AddWorkerView.baml
