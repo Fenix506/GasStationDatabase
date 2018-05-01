@@ -11,7 +11,7 @@ namespace GasStation.ViewModels
             DisplayName = "";
 
             var login = new LoginViewModel();
-          
+            var statistic = new StatisticViewModel();
           
             login.SignIn += (sender, args) =>
             {
@@ -29,10 +29,10 @@ namespace GasStation.ViewModels
             };
        
             Items.Add(login);
-           
+           Items.Add(statistic);
          
 
-            Select(login);
+            Select(statistic);
         }
 
         public BindableCollection<IScreen> Items { get; } = new BindableCollection<IScreen>();

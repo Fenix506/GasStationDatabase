@@ -36,3 +36,13 @@ C:\Users\super\Desktop\НУ-ЛП_3К2С\Course\GasStation\GasStation\obj\Debug\V
 C:\Users\super\Desktop\НУ-ЛП_3К2С\Course\GasStation\GasStation\obj\Debug\Views\IncomeFuelView.baml
 C:\Users\super\Desktop\НУ-ЛП_3К2С\Course\GasStation\GasStation\obj\Debug\Views\AddWorkerView.g.cs
 C:\Users\super\Desktop\НУ-ЛП_3К2С\Course\GasStation\GasStation\obj\Debug\Views\AddWorkerView.baml
+C:\Users\super\Desktop\НУ-ЛП_3К2С\Course\GasStation\GasStation\obj\Debug\Views\StatisticView.g.cs
+C:\Users\super\Desktop\НУ-ЛП_3К2С\Course\GasStation\GasStation\obj\Debug\Views\StatisticView.baml
+C:\Users\super\Desktop\НУ-ЛП_3К2С\Course\GasStation\GasStation\bin\Debug\LiveCharts.dll
+C:\Users\super\Desktop\НУ-ЛП_3К2С\Course\GasStation\GasStation\bin\Debug\LiveCharts.Wpf.dll
+C:\Users\super\Desktop\НУ-ЛП_3К2С\Course\GasStation\GasStation\bin\Debug\LiveCharts.pdb
+C:\Users\super\Desktop\НУ-ЛП_3К2С\Course\GasStation\GasStation\bin\Debug\LiveCharts.xml
+C:\Users\super\Desktop\НУ-ЛП_3К2С\Course\GasStation\GasStation\bin\Debug\LiveCharts.Wpf.pdb
+C:\Users\super\Desktop\НУ-ЛП_3К2С\Course\GasStation\GasStation\bin\Debug\LiveCharts.Wpf.xml
+C:\Users\super\Desktop\НУ-ЛП_3К2С\Course\GasStation\GasStation\bin\Debug\ru\EntityFramework.resources.dll
+C:\Users\super\Desktop\НУ-ЛП_3К2С\Course\GasStation\GasStation\bin\Debug\ru\EntityFramework.SqlServer.resources.dll
