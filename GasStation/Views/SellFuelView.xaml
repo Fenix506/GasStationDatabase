@@ -9,22 +9,114 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <Style BasedOn="{StaticResource {x:Type ToggleButton}}" TargetType="RadioButton">
+
+        <SolidColorBrush x:Key="FontBrush" Color="#DDDDDD" />
+
+        <LinearGradientBrush x:Key="BgBrush1" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Offset="0" Color="#888888" />
+            <GradientStop Offset="1" Color="#222222" />
+        </LinearGradientBrush>
+
+        <SolidColorBrush x:Key="BorderBrush1" Color="#333333" />
+        <LinearGradientBrush x:Key="CheckedBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Offset="0" Color="#555555" />
+            <GradientStop Offset="1" Color="#111111" />
+        </LinearGradientBrush>
+        <!--  Left Button(s) Template  -->
+        <ControlTemplate x:Key="ToggleButtonLeft" TargetType="{x:Type ToggleButton}">
+            <Border
+                Name="Border"
+                Background="{StaticResource BgBrush1}"
+                BorderBrush="{StaticResource BorderBrush1}"
+                BorderThickness="1"
+                CornerRadius="5,0,0,5">
+                <ContentPresenter
+                    Margin="{TemplateBinding Padding}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Content="{TemplateBinding Content}"
+                    TextBlock.FontWeight="Bold"
+                    TextBlock.Foreground="{StaticResource FontBrush}" />
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                    <Setter TargetName="Border" Property="Background" Value="#808080" />
+                </Trigger>
+                <Trigger Property="IsChecked" Value="true">
+                    <Setter TargetName="Border" Property="Background" Value="{StaticResource CheckedBrush}" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <!--  Middle Button(s) Template  -->
+        <ControlTemplate x:Key="ToggleButtonMid" TargetType="{x:Type ToggleButton}">
+            <Border
+                Name="Border"
+                Background="{StaticResource BgBrush1}"
+                BorderBrush="{StaticResource BorderBrush1}"
+                BorderThickness="0,1,0,1"
+                CornerRadius="0">
+                <ContentPresenter
+                    Margin="{TemplateBinding Padding}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Content="{TemplateBinding Content}"
+                    TextBlock.FontWeight="Bold"
+                    TextBlock.Foreground="{StaticResource FontBrush}" />
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                    <Setter TargetName="Border" Property="Background" Value="#808080" />
+                </Trigger>
+                <Trigger Property="IsChecked" Value="true">
+                    <Setter TargetName="Border" Property="Background" Value="{StaticResource CheckedBrush}" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+            <!--  Other code identical to Left Button Template  -->
+        </ControlTemplate>
+
+        <!--  Right Button Template  -->
+        <ControlTemplate x:Key="ToggleButtonRight" TargetType="{x:Type ToggleButton}">
+            <Border
+                Name="Border"
+                Background="{StaticResource BgBrush1}"
+                BorderBrush="{StaticResource BorderBrush1}"
+                BorderThickness="1"
+                CornerRadius="0, 5, 5, 0">
+                <ContentPresenter
+                    Margin="{TemplateBinding Padding}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Content="{TemplateBinding Content}"
+                    TextBlock.FontWeight="Bold"
+                    TextBlock.Foreground="{StaticResource FontBrush}" />
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                    <Setter TargetName="Border" Property="Background" Value="#808080" />
+                </Trigger>
+                <Trigger Property="IsChecked" Value="true">
+                    <Setter TargetName="Border" Property="Background" Value="{StaticResource CheckedBrush}" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+            <!--  Other code identical to Left Button Template  -->
+        </ControlTemplate>
+
+
+        <Style TargetType="RadioButton">
             <Setter Property="Width" Value="40" />
             <Setter Property="Height" Value="40" />
-            <Setter Property="Margin" Value="5" />
+
+
         </Style>
-        <Style TargetType="TextBox">
-            <Setter Property="Margin" Value="5" />
-        </Style>
+
         <Style TargetType="Button">
             <Setter Property="FontSize" Value="20" />
             <Setter Property="FontFamily" Value="Arial" />
-            <Setter Property="Margin" Value="5" />
+
         </Style>
     </UserControl.Resources>
 
-    <Grid Background="Wheat">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20" />
             <ColumnDefinition Width="Auto" />
@@ -33,7 +125,9 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="20" />
             <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="20" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="20" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -48,13 +142,14 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
         <StackPanel
             Grid.Row="1"
             Grid.Column="1"
             Grid.ColumnSpan="7">
-            <TextBlock x:Name="PersonalInfo" />
+            <TextBlock x:Name="PersonalInfo" Margin="5,10" />
         </StackPanel>
         <StackPanel
             Grid.Row="2"
@@ -62,30 +157,50 @@
             Grid.ColumnSpan="5"
             Orientation="Horizontal">
             <Label>Дисконтна програма</Label>
-            <TextBox x:Name="ClientNum" Width="120" />
-            <Button x:Name="SearchClient" FontSize="12">Пошук</Button>
+            <TextBox
+                x:Name="ClientNum"
+                Width="95"
+                FontSize="16" />
+
         </StackPanel>
+        <Button
+            x:Name="SearchClient"
+            Grid.Row="2"
+            Grid.Column="6"
+            Margin="0,0,0,0"
+            FontSize="12">
+            Пошук
+        </Button>
         <StackPanel
             Grid.Row="3"
             Grid.Column="1"
             Grid.ColumnSpan="5">
-            <TextBlock x:Name="ClientInfo" />
+            <TextBlock x:Name="ClientInfo" Margin="5,10" />
         </StackPanel>
         <StackPanel
             Grid.Row="4"
             Grid.Column="1"
             Grid.ColumnSpan="2">
-            <Label>Виберіть колонку:</Label>
+            <Label>Колонка №</Label>
         </StackPanel>
         <StackPanel
             Grid.Row="5"
             Grid.RowSpan="6"
-            Grid.Column="1">
+            Grid.Column="1"
+            HorizontalAlignment="Right">
 
-            <RadioButton x:Name="Column1" GroupName="Column">
+
+            <RadioButton
+                x:Name="Column1"
+                GroupName="Column"
+                Template="{DynamicResource ToggleButtonLeft}">
                 1
             </RadioButton>
-            <RadioButton x:Name="Column3" GroupName="Column">
+            <RadioButton
+                x:Name="Column3"
+                Margin="0,10,0,0"
+                GroupName="Column"
+                Template="{DynamicResource ToggleButtonLeft}">
                 3
             </RadioButton>
 
@@ -93,11 +208,19 @@
         <StackPanel
             Grid.Row="5"
             Grid.RowSpan="6"
-            Grid.Column="2">
-            <RadioButton x:Name="Column2" GroupName="Column">
+            Grid.Column="2"
+            HorizontalAlignment="Left">
+            <RadioButton
+                x:Name="Column2"
+                GroupName="Column"
+                Template="{DynamicResource ToggleButtonRight}">
                 2
             </RadioButton>
-            <RadioButton x:Name="Column4" GroupName="Column">
+            <RadioButton
+                x:Name="Column4"
+                Margin="0,10,0,0"
+                GroupName="Column"
+                Template="{DynamicResource ToggleButtonRight}">
                 4
             </RadioButton>
         </StackPanel>
@@ -105,27 +228,46 @@
             Grid.Row="5"
             Grid.Column="4"
             Orientation="Horizontal">
-            <RadioButton x:Name="Type1" GroupName="Type">
+            <RadioButton
+                x:Name="Type1"
+                GroupName="Type"
+                Template="{DynamicResource ToggleButtonLeft}">
                 A-95
             </RadioButton>
-            <RadioButton x:Name="Type2" GroupName="Type">
+            <RadioButton
+                x:Name="Type2"
+                GroupName="Type"
+                Template="{DynamicResource ToggleButtonMid}">
                 A-92
             </RadioButton>
-            <RadioButton x:Name="Type3" GroupName="Type">
+            <RadioButton
+                x:Name="Type3"
+                GroupName="Type"
+                Template="{DynamicResource ToggleButtonRight}">
                 DP
             </RadioButton>
         </StackPanel>
         <StackPanel
             Grid.Row="6"
             Grid.Column="4"
+            Margin="0,10,0,0"
             Orientation="Horizontal">
-            <RadioButton x:Name="Type4" GroupName="Type">
+            <RadioButton
+                x:Name="Type4"
+                GroupName="Type"
+                Template="{DynamicResource ToggleButtonLeft}">
                 A-95+
             </RadioButton>
-            <RadioButton x:Name="Type5" GroupName="Type">
+            <RadioButton
+                x:Name="Type5"
+                GroupName="Type"
+                Template="{DynamicResource ToggleButtonMid}">
                 DP+
             </RadioButton>
-            <RadioButton x:Name="Type6" GroupName="Type">
+            <RadioButton
+                x:Name="Type6"
+                GroupName="Type"
+                Template="{DynamicResource ToggleButtonRight}">
                 LPG
             </RadioButton>
         </StackPanel>
@@ -133,19 +275,27 @@
             Grid.Row="5"
             Grid.Column="6"
             Orientation="Horizontal">
-            <TextBox x:Name="Count" Width="120" />
+            <TextBox
+                x:Name="Count"
+                Width="100"
+                FontSize="20" />
         </StackPanel>
         <StackPanel
             Grid.Row="6"
             Grid.Column="6"
             Orientation="Horizontal">
-            <TextBox x:Name="Money" Width="120" />
+            <TextBox
+                x:Name="Money"
+                Width="100"
+                Margin="0,10,0,0"
+                FontSize="20" />
         </StackPanel>
         <Button
             x:Name="Sell"
             Grid.Row="5"
             Grid.RowSpan="2"
-            Grid.Column="7">
+            Grid.Column="8"
+            Grid.ColumnSpan="2">
             Розрахувати
         </Button>
         <StackPanel
@@ -157,14 +307,31 @@
         <StackPanel
             Grid.Row="8"
             Grid.Column="1"
-            Grid.ColumnSpan="5">
+            Grid.ColumnSpan="6"
+            HorizontalAlignment="Left">
             <DataGrid
-                Margin="5"
+                Width="{Binding Path=Width}"
                 AutoGenerateColumns="True"
                 CanUserAddRows="False"
                 ColumnWidth="Auto"
                 IsReadOnly="True"
                 ItemsSource="{Binding Path=Information.DefaultView}" />
         </StackPanel>
+        <Button
+            x:Name="LogOut"
+            Grid.Row="1"
+            Grid.Column="9"
+            Width="100"
+            Margin="0,5"
+            FontSize="12">
+            Вийти
+        </Button>
+        <Button
+            x:Name="Clear"
+            Grid.Row="2"
+            Grid.Column="9"
+            FontSize="12">
+            Очистити
+        </Button>
     </Grid>
 </UserControl>

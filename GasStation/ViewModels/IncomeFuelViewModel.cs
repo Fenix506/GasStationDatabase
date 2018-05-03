@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Data.Entity.Core.Metadata.Edm;
+using System.Windows;
 using Caliburn.Micro;
 using GasStation.Models;
 
@@ -26,6 +28,17 @@ namespace GasStation.ViewModels
         }
 
         private bool IsDigitF(string str) => float.TryParse(str, out var tmp) && tmp > 0;
+
+        private void ResetAll()
+        {
+            Type1 = false;
+            Type2 = false;
+            Type3 = false;
+            Type4 = false;
+            Type5 = false;
+            Type6 = false;
+            Count = string.Empty;
+        }
 
         #endregion
 
@@ -155,6 +168,8 @@ namespace GasStation.ViewModels
 
                 db.SaveChanges();
             }
+            MessageBox.Show($"Добавлено палива: {Count}", "Прихід палива", MessageBoxButton.OK);
+            ResetAll();
         }
 
         #endregion

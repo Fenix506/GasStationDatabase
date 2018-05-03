@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Windows;
 using Caliburn.Micro;
 using GasStation.Models;
 
@@ -19,6 +20,13 @@ namespace GasStation.ViewModels
         }
 
         #region Methods
+
+        public void ResetAll()
+        {
+            Name =string.Empty;
+            Surname = string.Empty;
+            MiddleName = string.Empty;
+        }
 
         public bool HasDigit(string str)
         {
@@ -100,6 +108,17 @@ namespace GasStation.ViewModels
                         Date_Registration = DateTime.Now
                     });
                     db.SaveChanges();
+                    
+                    MessageBox.Show(
+                        $"Додано нового постійного покупця \nЙого ідентифікаційний номер{db.Client.Single(x => x.Name == Name && x.Surname == Surname).Client_Num}",
+                        "Реєстрація", MessageBoxButton.OK);
+                    ResetAll();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        $"Такий клієнт вже зареєсторваний. Його номер:  {db.Client.Single(x => x.Name == Name && x.Surname == Surname).Client_Num}",
+                        "Реєстрація", MessageBoxButton.OK);
                 }
             }
         }

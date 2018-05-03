@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
+using System;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Controls;
+
+using System.Windows;
+
 using Caliburn.Micro;
 using GasStation.Models;
 
@@ -25,6 +26,16 @@ namespace GasStation.ViewModels
         }
 
         #region Methods
+
+        private void ResetAll()
+        {
+            Name = string.Empty;
+            Surname = string.Empty;
+            MiddleName = string.Empty;
+            Password = string.Empty;
+            Trainee = false;
+            Operator = false;
+        }
 
         public bool HasDigit(string str)
         {
@@ -150,6 +161,17 @@ namespace GasStation.ViewModels
  
                     });
                     db.SaveChanges();
+                  
+                    MessageBox.Show(
+                        $"Додано нового працівника \nЙого ідентифікаційний номер{db.Personal.Single(x => x.Name == Name && x.Surname == Surname).Personal_Num} та пароль {Password}",
+                        "Реєстрація", MessageBoxButton.OK);
+                     ResetAll();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        $"Такий працівник вже зареєсторваний. Його номер:  {db.Personal.Single(x => x.Name == Name && x.Surname == Surname).Personal_Num}",
+                        "Реєстрація", MessageBoxButton.OK);
                 }
             }
         }

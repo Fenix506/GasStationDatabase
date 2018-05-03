@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Windows;
 using Caliburn.Micro;
 using GasStation.Models;
 
@@ -20,12 +21,13 @@ namespace GasStation.ViewModels
         private bool[] _type = new bool[6];
         private string _count = string.Empty;
         private string _money = string.Empty;
+        private int _width = 200;
         private DataTable _information;
 
 
         public SellFuelViewModel(Personal personal)
         {
-            DisplayName = "Sell Fuell";
+            DisplayName = "Продаж";
             _personal = personal;
 
             CreateInformation();
@@ -60,7 +62,7 @@ namespace GasStation.ViewModels
 
         private bool IsDigitF(string str) => float.TryParse(str, out var tmp) && tmp > 0;
 
-        private bool IsDigitI(string str) => int.TryParse(str, out var tmp) && tmp > 0;
+        private bool IsDigitI(string str) => int.TryParse(str, out var tmp);
 
         private float GetRelevantPrice()
         {
@@ -115,6 +117,7 @@ namespace GasStation.ViewModels
             Type6 = false;
             Count = string.Empty;
             Money = string.Empty;
+            Width = 200;
         }
         #endregion
 
@@ -335,7 +338,15 @@ namespace GasStation.ViewModels
             }
         }
 
-
+        public int Width
+        {
+            get => _width;
+            set
+            {
+                _width = value;
+                NotifyOfPropertyChange(() => Width);
+            }
+        }
 
 
         #endregion
@@ -349,7 +360,14 @@ namespace GasStation.ViewModels
 
             if (int.TryParse(ClientNum, out var identificator))
             {
-                
+                if (identificator == 0)
+                {
+                    ClientInfo = string.Empty;
+                    _client = null;
+                    CreateInformation();
+                    Recalculate();
+                    return;
+                }
                 using (var db = new GasStationModel())
                 {
                     _client = db.Client.Find(identificator);
@@ -362,6 +380,11 @@ namespace GasStation.ViewModels
                     $"{_client.Surname} {_client.Name} {_client.Middle_Name} \nПерсональна знижка: {_client.Personal_Discount} \nКуплено палива: {_client.Liters_Sold} \nКількість бонусів {_client.Bonus}";
                 CreateInformation();
                 Recalculate();
+                Width = 270;
+            }
+            else
+            {
+                MessageBox.Show("Такий користувач не зареєстрований", "Дисконт", MessageBoxButton.OK);
             }
         }
 
@@ -408,7 +431,21 @@ namespace GasStation.ViewModels
             ResetAll();
             CreateInformation();
         }
+
+        public void Clear()
+        {
+            ResetAll();
+            CreateInformation();
+        }
+
+        public void LogOut()
+        {
+            Out?.Invoke(this, null);
+        }
         #endregion
 
+        public delegate void EventHendler(object sender, EventArgs args);
+
+        public event EventHendler Out;
     }
 }

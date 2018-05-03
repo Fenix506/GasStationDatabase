@@ -10,21 +10,26 @@
     mc:Ignorable="d">
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="20" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="20" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="1" Grid.Column="1">
-            <Label>Введіть ідентифікаційний номер</Label>
-            <TextBox x:Name="PersonalNum" />
-            <Label>Введіть пароль</Label>
-            <TextBox x:Name="Password" />
+        <StackPanel Grid.Row="2" Grid.Column="2">
+            <Label Margin="5,0">Введіть ідентифікаційний номер</Label>
+            <TextBox x:Name="PersonalNum" Margin="10,0" />
+            <Label Margin="5,10,5,0">Введіть пароль</Label>
+            <TextBox x:Name="Password"  Margin="10,0,10,10" />
             <Button x:Name="LogIn" Margin="10">Увійти</Button>
             <TextBlock x:Name="Connecting" />
         </StackPanel>

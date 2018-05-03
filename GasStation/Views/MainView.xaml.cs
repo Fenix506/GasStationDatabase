@@ -17,7 +17,7 @@ namespace GasStation.Views
     /// <summary>
     /// Логика взаимодействия для MainView.xaml
     /// </summary>
-    public partial class MainView : Window
+    public partial class MainView 
     {
         public MainView()
         {

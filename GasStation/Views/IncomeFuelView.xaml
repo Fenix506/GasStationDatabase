@@ -9,13 +9,105 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <Style BasedOn="{StaticResource {x:Type ToggleButton}}" TargetType="RadioButton">
+        <SolidColorBrush x:Key="FontBrush" Color="#DDDDDD" />
+
+        <LinearGradientBrush x:Key="BgBrush1" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Offset="0" Color="#888888" />
+            <GradientStop Offset="1" Color="#222222" />
+        </LinearGradientBrush>
+
+        <SolidColorBrush x:Key="BorderBrush1" Color="#333333" />
+        <LinearGradientBrush x:Key="CheckedBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Offset="0" Color="#555555" />
+            <GradientStop Offset="1" Color="#111111" />
+        </LinearGradientBrush>
+
+        <ControlTemplate x:Key="ToggleButtonLeft" TargetType="{x:Type ToggleButton}">
+            <Border
+                Name="Border"
+                Background="{StaticResource BgBrush1}"
+                BorderBrush="{StaticResource BorderBrush1}"
+                BorderThickness="1"
+                CornerRadius="5,0,0,5">
+                <ContentPresenter
+                    Margin="{TemplateBinding Padding}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Content="{TemplateBinding Content}"
+                    TextBlock.FontWeight="Bold"
+                    TextBlock.Foreground="{StaticResource FontBrush}" />
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                    <Setter TargetName="Border" Property="Background" Value="#808080" />
+                </Trigger>
+                <Trigger Property="IsChecked" Value="true">
+                    <Setter TargetName="Border" Property="Background" Value="{StaticResource CheckedBrush}" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <!--  Middle Button(s) Template  -->
+        <ControlTemplate x:Key="ToggleButtonMid" TargetType="{x:Type ToggleButton}">
+            <Border
+                Name="Border"
+                Background="{StaticResource BgBrush1}"
+                BorderBrush="{StaticResource BorderBrush1}"
+                BorderThickness="0,1,0,1"
+                CornerRadius="0">
+                <ContentPresenter
+                    Margin="{TemplateBinding Padding}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Content="{TemplateBinding Content}"
+                    TextBlock.FontWeight="Bold"
+                    TextBlock.Foreground="{StaticResource FontBrush}" />
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                    <Setter TargetName="Border" Property="Background" Value="#808080" />
+                </Trigger>
+                <Trigger Property="IsChecked" Value="true">
+                    <Setter TargetName="Border" Property="Background" Value="{StaticResource CheckedBrush}" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+            <!--  Other code identical to Left Button Template  -->
+        </ControlTemplate>
+
+        <!--  Right Button Template  -->
+        <ControlTemplate x:Key="ToggleButtonRight" TargetType="{x:Type ToggleButton}">
+            <Border
+                Name="Border"
+                Background="{StaticResource BgBrush1}"
+                BorderBrush="{StaticResource BorderBrush1}"
+                BorderThickness="1"
+                CornerRadius="0, 5, 5, 0">
+                <ContentPresenter
+                    Margin="{TemplateBinding Padding}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Content="{TemplateBinding Content}"
+                    TextBlock.FontWeight="Bold"
+                    TextBlock.Foreground="{StaticResource FontBrush}" />
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                    <Setter TargetName="Border" Property="Background" Value="#808080" />
+                </Trigger>
+                <Trigger Property="IsChecked" Value="true">
+                    <Setter TargetName="Border" Property="Background" Value="{StaticResource CheckedBrush}" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+            <!--  Other code identical to Left Button Template  -->
+        </ControlTemplate>
+
+
+        <Style TargetType="RadioButton">
             <Setter Property="Width" Value="40" />
             <Setter Property="Height" Value="40" />
-            <Setter Property="Margin" Value="5" />
+
         </Style>
     </UserControl.Resources>
-    <Grid Background="Wheat">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20" />
             <ColumnDefinition Width="*" />
@@ -41,13 +133,22 @@
             Grid.Row="2"
             Grid.Column="2"
             Orientation="Horizontal">
-            <RadioButton x:Name="Type1" GroupName="Type">
+            <RadioButton
+                x:Name="Type1"
+                GroupName="Type"
+                Template="{DynamicResource ToggleButtonLeft}">
                 A-95
             </RadioButton>
-            <RadioButton x:Name="Type2" GroupName="Type">
+            <RadioButton
+                x:Name="Type2"
+                GroupName="Type"
+                Template="{DynamicResource ToggleButtonMid}">
                 A-92
             </RadioButton>
-            <RadioButton x:Name="Type3" GroupName="Type">
+            <RadioButton
+                x:Name="Type3"
+                GroupName="Type"
+                Template="{DynamicResource ToggleButtonRight}">
                 DP
             </RadioButton>
         </StackPanel>
@@ -55,13 +156,22 @@
             Grid.Row="3"
             Grid.Column="2"
             Orientation="Horizontal">
-            <RadioButton x:Name="Type4" GroupName="Type">
+            <RadioButton
+                x:Name="Type4"
+                GroupName="Type"
+                Template="{DynamicResource ToggleButtonLeft}">
                 A-95+
             </RadioButton>
-            <RadioButton x:Name="Type5" GroupName="Type">
+            <RadioButton
+                x:Name="Type5"
+                GroupName="Type"
+                Template="{DynamicResource ToggleButtonMid}">
                 DP+
             </RadioButton>
-            <RadioButton x:Name="Type6" GroupName="Type">
+            <RadioButton
+                x:Name="Type6"
+                GroupName="Type"
+                Template="{DynamicResource ToggleButtonRight}">
                 LPG
             </RadioButton>
         </StackPanel>

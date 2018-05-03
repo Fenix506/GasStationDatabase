@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Caliburn.Micro;
 using GasStation.Models;
 
@@ -17,11 +18,9 @@ namespace GasStation.ViewModels
 
         public LoginViewModel()
         {
-            DisplayName = "Login";
+            DisplayName = "Вхід";
             
         }
-
-
         public bool CanLogIn
         {
              get { return !String.IsNullOrWhiteSpace(Password) && !String.IsNullOrWhiteSpace(PersonalNum); }
@@ -49,7 +48,8 @@ namespace GasStation.ViewModels
                     }
                     else
                     {
-                        Connecting = "Така особа не зареєстрована";
+                        MessageBox.Show("Помилка входу! \nПрацівника не існує або невірний пароль", "Помилка входу",
+                            MessageBoxButton.OK);
                     }
 
                 }

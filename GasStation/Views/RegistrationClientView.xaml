@@ -12,7 +12,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20" />
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="20" />
         </Grid.ColumnDefinitions>
@@ -21,16 +21,17 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="2" Grid.Column="2">
-            <Label Margin="10">Введіть ім'я*:</Label>
-            <TextBox x:Name="Name" Margin="10" />
-            <Label Margin="10">Введіть прізвище*:</Label>
-            <TextBox x:Name="Surname" Margin="10" />
-            <Label Margin="10">Введіть по батькові:</Label>
-            <TextBox x:Name="MiddleName" Margin="10" />
+            <Label Margin="5,0">Введіть ім'я*:</Label>
+            <TextBox x:Name="Name" Margin="10,0,10,10" />
+            <Label Margin="5,0">Введіть прізвище*:</Label>
+            <TextBox x:Name="Surname" Margin="10,0,10,10" />
+            <Label Margin="5,0">Введіть по батькові:</Label>
+            <TextBox x:Name="MiddleName" Margin="10,0,10,10" />
             <Button x:Name="Registration" Margin="10">Зареєструвати</Button>
             <TextBlock x:Name="Connecting" />
         </StackPanel>
